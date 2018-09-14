@@ -42,14 +42,19 @@ class DFA:
         
     def validate(self, s):
         ''' Checks if the string s is contained in the language
+            described by the DFA object
+            
+            Implicitly handles undefined transitions as dump states
             
             s: The string to be validated
-        '''
-        state = 0
+        ''' 
+        state = 0 # assume start state is zero
 
         for c in s:
+            # transition to next state
             state = self.transitions.get((c, state))
 
+            # treat undefined transition as sending to a dump state
             if state == None:
                 return False
 
